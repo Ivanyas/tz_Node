@@ -1,0 +1,24 @@
+{
+  "name": "tz_node",
+  "version": "1.0.0",
+  "description": "User support service",
+  "homepage": "https://github.com/Ivanyas/tz_Node#readme",
+  "bugs": {
+    "url": "https://github.com/Ivanyas/tz_Node/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Ivanyas/tz_Node.git"
+  },
+  "license": "ISC",
+  "author": "Ivanyas",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.2",
+    "jest": "^30.2.0"
+  }
+}
