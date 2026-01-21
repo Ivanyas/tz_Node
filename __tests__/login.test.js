@@ -30,8 +30,9 @@ describe('POST /login', () => {
   test('успешная авторизация', async () => {
     const res = await login({ email: testUser.email, password: testUser.password });
     expect(res.status).toBe(200);
-    expect(res.body.email).toBe(testUser.email);
-    expect(res.body.password).toBeUndefined();
+    expect(res.body.user.email).toBe(testUser.email);
+    expect(res.body.user.password).toBeUndefined();
+    expect(res.body.token).toBeDefined();
   });
 
   test('400 — не все поля заполнены', async () => {
