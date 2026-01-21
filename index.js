@@ -13,7 +13,7 @@ app.use(express.json());
 const safe = ({ password, ...user }) => user;
 
 app.get('/', (req, res) => {
-  res.json({ message: 'User Support Service API' });
+  res.json({ message: 'Сервис работы с пользователями' });
 });
 
 // валидация
@@ -52,6 +52,33 @@ app.post('/register', async (req, res) => {
   });
   
   res.status(201).json(safe(user));
+});
+
+// авторизация
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email и пароль обязательны' });
+  }
+  
+  const user = await prisma.user.findUnique({ where: { email } });
+  
+  if (!user) {
+    return res.status(401).json({ error: 'Неверный email или пароль' });
+  }
+  
+  const isValidPass = await bcrypt.compare(password, user.password);
+  
+  if (!isValidPass) {
+    return res.status(401).json({ error: 'Неверный email или пароль' });
+  }
+  
+  if (!user.isActive) {
+    return res.status(403).json({ error: 'Аккаунт деактивирован' });
+  }
+  
+  res.json(safe(user));
 });
 
 // ошибки

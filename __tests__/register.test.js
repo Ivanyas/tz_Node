@@ -5,8 +5,8 @@ import prisma from '../src/db.js';
 const register = (data) => request(app).post('/register').send(data);
 
 const validUser = {
-  fullName: 'Ivan Ivanov',
-  dateOfBirth: '1990-01-01',
+  fullName: 'Sergey Brin',
+  dateOfBirth: '1970-02-16',
   email: `test${Date.now()}@mail.ru`,
   password: 'secret123!',
 };
@@ -23,7 +23,7 @@ describe('POST /register', () => {
     expect(res.body.password).toBeUndefined();
   });
 
-  test('400 — не все поля', async () => {
+  test('400 — не все поля заполнены', async () => {
     const res = await register({ fullName: 'Test' });
     expect(res.status).toBe(400);
   });
