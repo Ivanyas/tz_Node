@@ -43,12 +43,12 @@ Authorization: Bearer <token>
 # Регистрация
 curl -X POST http://localhost:3000/register \
   -H "Content-Type: application/json" \
-  -d '{"fullName":"Иван Иванов","dateOfBirth":"1990-01-01","email":"ivan@mail.ru","password":"mypass123!"}'
+  -d '{"fullName":"Sergey Brin","dateOfBirth":"1973-08-21","email":"sergey@mail.ru","password":"mypass123!"}'
 
 # Авторизация (возвращает token)
 curl -X POST http://localhost:3000/login \
   -H "Content-Type: application/json" \
-  -d '{"email":"ivan@mail.ru","password":"mypass123!"}'
+  -d '{"email":"sergey@mail.ru","password":"mypass123!"}'
 
 # Запрос с токеном
 curl http://localhost:3000/users/1 \
