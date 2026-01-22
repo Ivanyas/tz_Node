@@ -104,6 +104,17 @@ app.post('/login', async (req, res) => {
   res.json({ user: safe(user), token });
 });
 
+// получение списка пользователей (только админ)
+app.get('/users', auth, async (req, res) => {
+  if (req.user.role !== 'ADMIN') {
+    return res.status(403).json({ error: 'Нет доступа' });
+  }
+
+  const users = await prisma.user.findMany();
+
+  res.json(users.map(safe));
+});
+
 // получение пользователя по ID
 app.get('/users/:id', auth, async (req, res) => {
   const id = parseInt(req.params.id);
