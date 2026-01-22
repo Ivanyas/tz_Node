@@ -137,6 +137,32 @@ app.get('/users/:id', auth, async (req, res) => {
   res.json(safe(user));
 });
 
+// блокировка пользователя
+app.patch('/users/:id/block', auth, async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  if (isNaN(id)) {
+    return res.status(400).json({ error: 'Неверный ID' });
+  }
+
+  if (req.user.role !== 'ADMIN' && req.user.id !== id) {
+    return res.status(403).json({ error: 'Нет доступа' });
+  }
+
+  const user = await prisma.user.findUnique({ where: { id } });
+
+  if (!user) {
+    return res.status(404).json({ error: 'Пользователь не найден' });
+  }
+
+  const updatedUser = await prisma.user.update({
+    where: { id },
+    data: { isActive: false },
+  });
+
+  res.json(safe(updatedUser));
+});
+
 // ошибки
 app.use((err, req, res, next) => {
   if (err.code === 'P2002') return res.status(409).json({ error: 'Email exists' });
